@@ -73,7 +73,7 @@ export default async function BlogPage() {
                 className="group"
               >
                 <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                  {post.image && (
+                  {post.image ? (
                     <div className="aspect-video relative overflow-hidden">
                       <Image
                         src={urlFor(post.image).width(400).height(225).url()}
@@ -81,6 +81,10 @@ export default async function BlogPage() {
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
+                    </div>
+                  ) : (
+                    <div className="aspect-video bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+                      <span className="text-4xl">🍄</span>
                     </div>
                   )}
                   <div className="p-6">
