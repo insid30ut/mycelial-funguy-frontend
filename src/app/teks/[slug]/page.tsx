@@ -66,13 +66,13 @@ function getCategoryColor(category: string) {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export default async function TekPage({ params }: PageProps) {
-  const { slug } = params
+  const { slug } = await params
   const tek = await getTek(slug)
 
   if (!tek) {
