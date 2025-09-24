@@ -9,11 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'mfg-green': '#00ff00', // Replace with the actual green from your site
-        'mfg-dark': '#1a1a1a',
+        'mfg-dark': '#2a2a3a',      // Dark purple-gray background
+        'mfg-light': '#f5f5dc',     // Creamy beige text
+        'mfg-purple': '#9d4edd',    // Vibrant purple accent
+        'mfg-teal': '#3c6e71',      // Muted teal secondary
+        'mfg-gold': '#f9a826',      // Goldenrod yellow highlight
       },
       fontFamily: {
         sans: ['var(--font-poppins)'],
+        display: ['var(--font-londrina-solid)'],
       },
     },
   },

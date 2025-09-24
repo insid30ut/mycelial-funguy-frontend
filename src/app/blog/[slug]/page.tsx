@@ -21,27 +21,24 @@ async function getBlogPost(slug: string): Promise<BlogPost | null> {
   return post
 }
 
-// Generate static params for all blog posts (optional, for better performance)
+// Generate static params for all blog posts
 export async function generateStaticParams() {
   const posts = await client.fetch(
-    `*[_type == "blogPost"] {
-      slug
-    }`
+    `*[_type == "blogPost"] { slug }`
   )
-  
   return posts.map((post: { slug: { current: string } }) => ({
     slug: post.slug.current,
   }))
 }
 
 interface PageProps {
-  params: Promise<{
+  params: {
     slug: string
-  }>
+  }
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const { slug } = await params
+  const { slug } = params
   const post = await getBlogPost(slug)
 
   if (!post) {
@@ -49,50 +46,25 @@ export default async function BlogPostPage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-green-800">
-                🍄 Mycelial FunGuy
-              </Link>
-            </div>
-            <div className="flex items-center space-x-8">
-              <Link href="/" className="text-gray-700 hover:text-green-600 transition-colors">
-                Home
-              </Link>
-              <Link href="/blog" className="text-green-600 font-semibold">
-                Blog
-              </Link>
-              <Link href="/teks" className="text-gray-700 hover:text-green-600 transition-colors">
-                Teks & Tips
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Article */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-mfg-dark text-mfg-light">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Back button */}
         <Link 
           href="/blog" 
-          className="inline-flex items-center text-green-600 hover:text-green-700 mb-8 transition-colors"
+          className="inline-flex items-center text-mfg-purple hover:text-mfg-gold mb-10 transition-colors font-semibold"
         >
-          ← Back to Blog
+          &larr; Back to The Mycelial Chronicle
         </Link>
 
         {/* Header */}
-        <header className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <header className="mb-10 text-center">
+          <h1 className="text-4xl md:text-6xl font-display font-black text-mfg-light mb-4 drop-shadow-[0_3px_3px_rgba(157,78,221,0.7)]">
             {post.title}
           </h1>
-          <p className="text-gray-600 text-lg mb-4">
+          <p className="text-mfg-light/70 text-lg mb-4 max-w-3xl mx-auto">
             {post.brief_description}
           </p>
-          <p className="text-gray-500">
+          <p className="text-mfg-light/50">
             Published on {new Date(post.published_at).toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
@@ -103,8 +75,8 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         {/* Featured Image */}
         {post.image && (
-          <div className="mb-8">
-            <div className="aspect-video relative rounded-lg overflow-hidden">
+          <div className="mb-12 shadow-2xl shadow-mfg-purple/20">
+            <div className="aspect-video relative rounded-lg overflow-hidden border-2 border-mfg-purple/50">
               <Image
                 src={urlFor(post.image).width(800).height(450).url()}
                 alt={post.title}
@@ -117,28 +89,21 @@ export default async function BlogPostPage({ params }: PageProps) {
         )}
 
         {/* Content */}
-        <div className="bg-white rounded-lg shadow-sm p-8">
-          <div className="prose prose-lg max-w-none">
+        <div className="bg-mfg-dark/50 backdrop-blur-md rounded-xl shadow-lg border border-mfg-purple/30 p-8 md:p-12">
+          <div className="prose prose-lg max-w-none prose-invert prose-headings:font-display prose-headings:text-mfg-gold prose-a:text-mfg-purple hover:prose-a:text-mfg-gold prose-strong:text-mfg-light">
             <PortableText 
               value={post.full_content_body}
               components={{
                 block: {
-                  h1: ({ children }) => <h1 className="text-2xl font-bold mb-4 mt-8">{children}</h1>,
-                  h2: ({ children }) => <h2 className="text-xl font-bold mb-3 mt-6">{children}</h2>,
-                  h3: ({ children }) => <h3 className="text-lg font-bold mb-2 mt-4">{children}</h3>,
-                  normal: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
-                },
-                marks: {
-                  strong: ({ children }) => <strong className="font-bold">{children}</strong>,
-                  em: ({ children }) => <em className="italic">{children}</em>,
+                  h1: ({ children }) => <h1 className="text-4xl font-black mb-6 mt-10">{children}</h1>,
+                  h2: ({ children }) => <h2 className="text-3xl font-bold mb-5 mt-8">{children}</h2>,
+                  h3: ({ children }) => <h3 className="text-2xl font-bold mb-4 mt-6">{children}</h3>,
+                  normal: ({ children }) => <p className="mb-6 leading-relaxed text-mfg-light/90">{children}</p>,
+                  blockquote: ({ children }) => <blockquote className="border-l-4 border-mfg-purple pl-4 italic text-mfg-light/80">{children}</blockquote>,
                 },
                 list: {
-                  bullet: ({ children }) => <ul className="list-disc list-inside mb-4 space-y-1">{children}</ul>,
-                  number: ({ children }) => <ol className="list-decimal list-inside mb-4 space-y-1">{children}</ol>,
-                },
-                listItem: {
-                  bullet: ({ children }) => <li className="mb-1">{children}</li>,
-                  number: ({ children }) => <li className="mb-1">{children}</li>,
+                  bullet: ({ children }) => <ul className="list-disc list-inside mb-6 space-y-2">{children}</ul>,
+                  number: ({ children }) => <ol className="list-decimal list-inside mb-6 space-y-2">{children}</ol>,
                 },
               }}
             />
@@ -146,12 +111,12 @@ export default async function BlogPostPage({ params }: PageProps) {
         </div>
 
         {/* Navigation to other posts */}
-        <div className="mt-12 text-center">
+        <div className="mt-16 text-center">
           <Link 
             href="/blog" 
-            className="inline-flex items-center bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+            className="bg-mfg-purple text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-mfg-gold hover:scale-105 transform transition-all duration-300 shadow-lg shadow-mfg-purple/40"
           >
-            Read More Posts
+            Explore More Chronicles
           </Link>
         </div>
       </article>
