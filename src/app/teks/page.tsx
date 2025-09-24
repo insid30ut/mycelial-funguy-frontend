@@ -23,13 +23,13 @@ async function getTeksAndTips(): Promise<TekAndTip[]> {
 function getDifficultyColor(difficulty: string) {
   switch (difficulty) {
     case 'beginner':
-      return 'bg-green-100 text-green-800'
+      return 'bg-mfg-teal text-mfg-light'
     case 'intermediate':
-      return 'bg-yellow-100 text-yellow-800'
+      return 'bg-mfg-gold text-mfg-dark'
     case 'advanced':
-      return 'bg-red-100 text-red-800'
+      return 'bg-mfg-purple text-mfg-light'
     default:
-      return 'bg-gray-100 text-gray-800'
+      return 'bg-gray-500 text-white'
   }
 }
 
@@ -37,17 +37,17 @@ function getDifficultyColor(difficulty: string) {
 function getCategoryColor(category: string) {
   switch (category) {
     case 'growing':
-      return 'bg-blue-100 text-blue-800'
+      return 'border-blue-400 text-blue-300'
     case 'sterilization':
-      return 'bg-purple-100 text-purple-800'
+      return 'border-purple-400 text-purple-300'
     case 'substrate':
-      return 'bg-orange-100 text-orange-800'
+      return 'border-orange-400 text-orange-300'
     case 'harvesting':
-      return 'bg-pink-100 text-pink-800'
+      return 'border-pink-400 text-pink-300'
     case 'general':
-      return 'bg-gray-100 text-gray-800'
+      return 'border-gray-400 text-gray-300'
     default:
-      return 'bg-gray-100 text-gray-800'
+      return 'border-gray-500 text-gray-400'
   }
 }
 
@@ -55,58 +55,34 @@ export default async function TeksPage() {
   const teks = await getTeksAndTips()
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-green-800">
-                🍄 Mycelial FunGuy
-              </Link>
-            </div>
-            <div className="flex items-center space-x-8">
-              <Link href="/" className="text-gray-700 hover:text-green-600 transition-colors">
-                Home
-              </Link>
-              <Link href="/blog" className="text-gray-700 hover:text-green-600 transition-colors">
-                Blog
-              </Link>
-              <Link href="/teks" className="text-green-600 font-semibold">
-                Teks & Tips
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <div className="min-h-screen bg-mfg-dark text-mfg-light">
       {/* Header */}
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-3xl font-bold text-gray-900">Teks & Tips</h1>
-          <p className="text-gray-600 mt-2">
-            Proven techniques and methods for successful mushroom cultivation
+      <div className="bg-mfg-dark/80 backdrop-blur-sm border-b border-mfg-purple/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+          <h1 className="text-5xl md:text-6xl font-display font-black text-mfg-light drop-shadow-[0_3px_3px_rgba(157,78,221,0.7)]">Sacred Teks & Cosmic Tips</h1>
+          <p className="text-mfg-light/80 mt-4 text-lg max-w-2xl mx-auto">
+            Proven techniques and arcane methods for successful mushroom cultivation.
           </p>
         </div>
       </div>
 
       {/* Teks & Tips Grid */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {teks.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">
-              No teks & tips yet. Create your first tek in the Sanity Studio!
+            <p className="text-mfg-light/70 text-lg">
+              The ancient library is empty... No teks yet. Scribe your first tek in the Sanity Studio!
             </p>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teks.map((tek) => (
               <Link 
                 key={tek._id} 
                 href={`/teks/${tek.slug.current}`}
-                className="group"
+                className="group block"
               >
-                <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <article className="bg-mfg-dark/50 backdrop-blur-md rounded-xl shadow-lg border border-mfg-purple/30 overflow-hidden h-full transform hover:-translate-y-2 transition-transform duration-300">
                   {tek.image ? (
                     <div className="aspect-video relative overflow-hidden">
                       <Image
@@ -117,34 +93,34 @@ export default async function TeksPage() {
                       />
                     </div>
                   ) : (
-                    <div className="aspect-video bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
-                      <span className="text-4xl">🔬</span>
+                    <div className="aspect-video bg-gradient-to-br from-mfg-purple/20 to-mfg-teal/20 flex items-center justify-center">
+                      <span className="text-5xl opacity-50">🔬</span>
                     </div>
                   )}
-                  <div className="p-6">
-                    <div className="flex flex-wrap gap-2 mb-3">
+                  <div className="p-6 flex flex-col">
+                    <div className="flex flex-wrap gap-2 mb-4">
                       {tek.category && (
-                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${getCategoryColor(tek.category)}`}>
+                        <span className={`px-3 py-1 text-xs font-bold rounded-full border ${getCategoryColor(tek.category)}`}>
                           {tek.category.charAt(0).toUpperCase() + tek.category.slice(1)}
                         </span>
                       )}
                       {tek.difficulty_level && (
-                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${getDifficultyColor(tek.difficulty_level)}`}>
+                        <span className={`px-3 py-1 text-xs font-bold rounded-full ${getDifficultyColor(tek.difficulty_level)}`}>
                           {tek.difficulty_level.charAt(0).toUpperCase() + tek.difficulty_level.slice(1)}
                         </span>
                       )}
                     </div>
-                    <h2 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                    <h2 className="text-2xl font-display font-bold text-mfg-light mb-2 group-hover:text-mfg-purple transition-colors">
                       {tek.title}
                     </h2>
-                    <p className="text-gray-600 text-sm mb-3">
+                    <p className="text-mfg-light/60 text-sm mb-4">
                       {new Date(tek.published_at).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
                       })}
                     </p>
-                    <p className="text-gray-700 line-clamp-3">
+                    <p className="text-mfg-light/80 line-clamp-3 flex-grow">
                       {tek.brief_description}
                     </p>
                   </div>

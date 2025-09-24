@@ -21,58 +21,34 @@ export default async function BlogPage() {
   const posts = await getBlogPosts()
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-green-800">
-                🍄 Mycelial FunGuy
-              </Link>
-            </div>
-            <div className="flex items-center space-x-8">
-              <Link href="/" className="text-gray-700 hover:text-green-600 transition-colors">
-                Home
-              </Link>
-              <Link href="/blog" className="text-green-600 font-semibold">
-                Blog
-              </Link>
-              <Link href="/teks" className="text-gray-700 hover:text-green-600 transition-colors">
-                Teks & Tips
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <div className="min-h-screen bg-mfg-dark text-mfg-light">
       {/* Header */}
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-3xl font-bold text-gray-900">Blog Posts</h1>
-          <p className="text-gray-600 mt-2">
-            Latest insights, stories, and updates from the mushroom cultivation world
+      <div className="bg-mfg-dark/80 backdrop-blur-sm border-b border-mfg-purple/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+          <h1 className="text-5xl md:text-6xl font-display font-black text-mfg-light drop-shadow-[0_3px_3px_rgba(157,78,221,0.7)]">The Mycelial Chronicle</h1>
+          <p className="text-mfg-light/80 mt-4 text-lg max-w-2xl mx-auto">
+            Latest insights, stories, and cosmic transmissions from the mushroom cultivation universe.
           </p>
         </div>
       </div>
 
       {/* Blog Posts Grid */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {posts.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">
-              No blog posts yet. Create your first post in the Sanity Studio!
+            <p className="text-mfg-light/70 text-lg">
+              The ether is quiet... No blog posts yet. Create your first transmission in the Sanity Studio!
             </p>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
               <Link 
                 key={post._id} 
                 href={`/blog/${post.slug.current}`}
-                className="group"
+                className="group block"
               >
-                <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <article className="bg-mfg-dark/50 backdrop-blur-md rounded-xl shadow-lg border border-mfg-purple/30 overflow-hidden h-full transform hover:-translate-y-2 transition-transform duration-300">
                   {post.image ? (
                     <div className="aspect-video relative overflow-hidden">
                       <Image
@@ -83,22 +59,22 @@ export default async function BlogPage() {
                       />
                     </div>
                   ) : (
-                    <div className="aspect-video bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
-                      <span className="text-4xl">🍄</span>
+                    <div className="aspect-video bg-gradient-to-br from-mfg-purple/20 to-mfg-teal/20 flex items-center justify-center">
+                      <span className="text-5xl opacity-50">🍄</span>
                     </div>
                   )}
-                  <div className="p-6">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                  <div className="p-6 flex flex-col">
+                    <h2 className="text-2xl font-display font-bold text-mfg-light mb-2 group-hover:text-mfg-purple transition-colors">
                       {post.title}
                     </h2>
-                    <p className="text-gray-600 text-sm mb-3">
+                    <p className="text-mfg-light/60 text-sm mb-4">
                       {new Date(post.published_at).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
                       })}
                     </p>
-                    <p className="text-gray-700 line-clamp-3">
+                    <p className="text-mfg-light/80 line-clamp-3 flex-grow">
                       {post.brief_description}
                     </p>
                   </div>

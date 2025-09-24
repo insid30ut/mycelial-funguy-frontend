@@ -23,14 +23,11 @@ async function getTek(slug: string): Promise<TekAndTip | null> {
   return tek
 }
 
-// Generate static params for all teks (optional, for better performance)
+// Generate static params for all teks
 export async function generateStaticParams() {
   const teks = await client.fetch(
-    `*[_type == "tekAndTip"] {
-      slug
-    }`
+    `*[_type == "tekAndTip"] { slug }`
   )
-  
   return teks.map((tek: { slug: { current: string } }) => ({
     slug: tek.slug.current,
   }))
@@ -40,13 +37,13 @@ export async function generateStaticParams() {
 function getDifficultyColor(difficulty: string) {
   switch (difficulty) {
     case 'beginner':
-      return 'bg-green-100 text-green-800'
+      return 'bg-mfg-teal text-mfg-light'
     case 'intermediate':
-      return 'bg-yellow-100 text-yellow-800'
+      return 'bg-mfg-gold text-mfg-dark'
     case 'advanced':
-      return 'bg-red-100 text-red-800'
+      return 'bg-mfg-purple text-mfg-light'
     default:
-      return 'bg-gray-100 text-gray-800'
+      return 'bg-gray-500 text-white'
   }
 }
 
@@ -54,17 +51,17 @@ function getDifficultyColor(difficulty: string) {
 function getCategoryColor(category: string) {
   switch (category) {
     case 'growing':
-      return 'bg-blue-100 text-blue-800'
+      return 'border-blue-400 text-blue-300'
     case 'sterilization':
-      return 'bg-purple-100 text-purple-800'
+      return 'border-purple-400 text-purple-300'
     case 'substrate':
-      return 'bg-orange-100 text-orange-800'
+      return 'border-orange-400 text-orange-300'
     case 'harvesting':
-      return 'bg-pink-100 text-pink-800'
+      return 'border-pink-400 text-pink-300'
     case 'general':
-      return 'bg-gray-100 text-gray-800'
+      return 'border-gray-400 text-gray-300'
     default:
-      return 'bg-gray-100 text-gray-800'
+      return 'border-gray-500 text-gray-400'
   }
 }
 
@@ -83,63 +80,38 @@ export default async function TekPage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-green-800">
-                🍄 Mycelial FunGuy
-              </Link>
-            </div>
-            <div className="flex items-center space-x-8">
-              <Link href="/" className="text-gray-700 hover:text-green-600 transition-colors">
-                Home
-              </Link>
-              <Link href="/blog" className="text-gray-700 hover:text-green-600 transition-colors">
-                Blog
-              </Link>
-              <Link href="/teks" className="text-green-600 font-semibold">
-                Teks & Tips
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Article */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-mfg-dark text-mfg-light">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Back button */}
         <Link 
           href="/teks" 
-          className="inline-flex items-center text-green-600 hover:text-green-700 mb-8 transition-colors"
+          className="inline-flex items-center text-mfg-purple hover:text-mfg-gold mb-10 transition-colors font-semibold"
         >
-          ← Back to Teks & Tips
+          &larr; Back to Sacred Teks & Cosmic Tips
         </Link>
 
         {/* Header */}
-        <header className="mb-8">
-          <div className="flex flex-wrap gap-3 mb-4">
+        <header className="mb-10 text-center">
+          <div className="flex flex-wrap gap-4 justify-center mb-6">
             {tek.category && (
-              <span className={`px-3 py-1 text-sm font-medium rounded-full ${getCategoryColor(tek.category)}`}>
+              <span className={`px-4 py-1 text-sm font-bold rounded-full border-2 ${getCategoryColor(tek.category)}`}>
                 {tek.category.charAt(0).toUpperCase() + tek.category.slice(1)}
               </span>
             )}
             {tek.difficulty_level && (
-              <span className={`px-3 py-1 text-sm font-medium rounded-full ${getDifficultyColor(tek.difficulty_level)}`}>
+              <span className={`px-4 py-1 text-sm font-bold rounded-full ${getDifficultyColor(tek.difficulty_level)}`}>
                 {tek.difficulty_level.charAt(0).toUpperCase() + tek.difficulty_level.slice(1)}
               </span>
             )}
           </div>
           
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl md:text-6xl font-display font-black text-mfg-light mb-4 drop-shadow-[0_3px_3px_rgba(157,78,221,0.7)]">
             {tek.title}
           </h1>
-          <p className="text-gray-600 text-lg mb-4">
+          <p className="text-mfg-light/70 text-lg mb-4 max-w-3xl mx-auto">
             {tek.brief_description}
           </p>
-          <p className="text-gray-500">
+          <p className="text-mfg-light/50">
             Published on {new Date(tek.published_at).toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
@@ -150,8 +122,8 @@ export default async function TekPage({ params }: PageProps) {
 
         {/* Featured Image */}
         {tek.image && (
-          <div className="mb-8">
-            <div className="aspect-video relative rounded-lg overflow-hidden">
+          <div className="mb-12 shadow-2xl shadow-mfg-purple/20">
+            <div className="aspect-video relative rounded-lg overflow-hidden border-2 border-mfg-purple/50">
               <Image
                 src={urlFor(tek.image).width(800).height(450).url()}
                 alt={tek.title}
@@ -164,28 +136,21 @@ export default async function TekPage({ params }: PageProps) {
         )}
 
         {/* Content */}
-        <div className="bg-white rounded-lg shadow-sm p-8">
-          <div className="prose prose-lg max-w-none">
+        <div className="bg-mfg-dark/50 backdrop-blur-md rounded-xl shadow-lg border border-mfg-purple/30 p-8 md:p-12">
+          <div className="prose prose-lg max-w-none prose-invert prose-headings:font-display prose-headings:text-mfg-gold prose-a:text-mfg-purple hover:prose-a:text-mfg-gold prose-strong:text-mfg-light">
             <PortableText 
               value={tek.full_content_body}
               components={{
                 block: {
-                  h1: ({ children }) => <h1 className="text-2xl font-bold mb-4 mt-8">{children}</h1>,
-                  h2: ({ children }) => <h2 className="text-xl font-bold mb-3 mt-6">{children}</h2>,
-                  h3: ({ children }) => <h3 className="text-lg font-bold mb-2 mt-4">{children}</h3>,
-                  normal: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
-                },
-                marks: {
-                  strong: ({ children }) => <strong className="font-bold">{children}</strong>,
-                  em: ({ children }) => <em className="italic">{children}</em>,
+                  h1: ({ children }) => <h1 className="text-4xl font-black mb-6 mt-10">{children}</h1>,
+                  h2: ({ children }) => <h2 className="text-3xl font-bold mb-5 mt-8">{children}</h2>,
+                  h3: ({ children }) => <h3 className="text-2xl font-bold mb-4 mt-6">{children}</h3>,
+                  normal: ({ children }) => <p className="mb-6 leading-relaxed text-mfg-light/90">{children}</p>,
+                  blockquote: ({ children }) => <blockquote className="border-l-4 border-mfg-purple pl-4 italic text-mfg-light/80">{children}</blockquote>,
                 },
                 list: {
-                  bullet: ({ children }) => <ul className="list-disc list-inside mb-4 space-y-1">{children}</ul>,
-                  number: ({ children }) => <ol className="list-decimal list-inside mb-4 space-y-1">{children}</ol>,
-                },
-                listItem: {
-                  bullet: ({ children }) => <li className="mb-1">{children}</li>,
-                  number: ({ children }) => <li className="mb-1">{children}</li>,
+                  bullet: ({ children }) => <ul className="list-disc list-inside mb-6 space-y-2">{children}</ul>,
+                  number: ({ children }) => <ol className="list-decimal list-inside mb-6 space-y-2">{children}</ol>,
                 },
               }}
             />
@@ -193,12 +158,12 @@ export default async function TekPage({ params }: PageProps) {
         </div>
 
         {/* Navigation to other teks */}
-        <div className="mt-12 text-center">
+        <div className="mt-16 text-center">
           <Link 
             href="/teks" 
-            className="inline-flex items-center bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+            className="bg-mfg-purple text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-mfg-gold hover:scale-105 transform transition-all duration-300 shadow-lg shadow-mfg-purple/40"
           >
-            Browse More Teks & Tips
+            Browse More Sacred Teks
           </Link>
         </div>
       </article>
