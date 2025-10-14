@@ -42,5 +42,9 @@ next-env.d.ts
 
 .roo
 .ruru
+<<<<<<< HEAD
 .kilocode
 .roomodes
+=======
+.kilocode
+>>>>>>> 86538e8 (Add additional file types to .gitignore)
