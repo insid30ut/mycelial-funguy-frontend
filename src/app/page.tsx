@@ -23,6 +23,9 @@ export default function Home() {
               <Link href="/teks" className="text-mfg-light hover:text-mfg-purple transition-colors duration-300 text-lg font-semibold">
                 Teks & Tips
               </Link>
+              <Link href="/calculators" className="text-mfg-light hover:text-mfg-purple transition-colors duration-300 text-lg font-semibold">
+                Calculators
+              </Link>
             </div>
           </div>
         </div>
