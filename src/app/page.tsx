@@ -6,7 +6,7 @@ export default function Home() {
     <div className="min-h-screen bg-mfg-dark text-mfg-light font-sans">
       {/* Hero Section */}
       <main className="relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 opacity-70">
           <Image
             src="/Gemini_Generated_Image_iq89s9iq89s9iq89.png"
             alt="Psychedelic mushroom landscape"
@@ -28,13 +28,13 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 
               href="/blog" 
-              className="bg-mfg-purple text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-mfg-gold hover:scale-105 transform transition-all duration-300 shadow-lg shadow-mfg-purple/40"
+              className="bg-mfg-dark/50 backdrop-blur-sm border-2 border-mfg-light/30 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-mfg-gold hover:border-mfg-gold hover:text-mfg-dark hover:scale-105 transform transition-all duration-300 shadow-lg shadow-mfg-purple/40"
             >
               My Stories
             </Link>
-            <Link 
-              href="/teks" 
-              className="bg-mfg-teal text-mfg-light border-2 border-mfg-teal px-10 py-4 rounded-full font-bold text-lg hover:bg-transparent hover:border-mfg-gold hover:text-mfg-gold transition-all duration-300"
+            <Link
+              href="/teks"
+              className="bg-mfg-dark/50 backdrop-blur-sm border-2 border-mfg-light/30 text-shadow-neutral-200 px-10 py-4 rounded-full font-bold text-lg hover:bg-mfg-gold hover:border-mfg-gold hover:text-mfg-dark hover:scale-105 transition-all duration-300"
             >
               Some Teks/Tips
             </Link>
