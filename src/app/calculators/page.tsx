@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Navbar from '@/components/Navbar'
+
 import SubstrateCalculator from './components/SubstrateCalculator'
 import AgarCalculator from './components/AgarCalculator'
 import LiquidCultureCalculator from './components/LiquidCultureCalculator'
@@ -19,7 +19,7 @@ export default function CalculatorsPage() {
 
   return (
     <div className="min-h-screen bg-mfg-dark text-mfg-light">
-      <Navbar />
+
       
       {/* Header */}
       <div className="bg-mfg-dark/80 backdrop-blur-sm border-b border-mfg-purple/30">

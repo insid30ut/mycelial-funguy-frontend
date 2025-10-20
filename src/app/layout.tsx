@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Poppins, Londrina_Solid } from 'next/font/google';
 import './globals.css';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/Footer';
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -26,11 +27,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body
-        className={`${poppins.variable} ${londrinaSolid.variable} font-sans antialiased`}
+        className={`${poppins.variable} ${londrinaSolid.variable} font-sans antialiased flex flex-col min-h-screen`}
       >
-        {children}
+        <Navbar />
+        <main className="flex-grow">{children}</main>
+        <Footer />
       </body>
     </html>
   );
