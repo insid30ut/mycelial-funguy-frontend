@@ -2,9 +2,24 @@ import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
+// Validate required environment variables
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
+
+if (!projectId || !dataset) {
+  const missingVars = []
+  if (!projectId) missingVars.push('NEXT_PUBLIC_SANITY_PROJECT_ID')
+  if (!dataset) missingVars.push('NEXT_PUBLIC_SANITY_DATASET')
+  
+  throw new Error(
+    `Missing required Sanity environment variables: ${missingVars.join(', ')}. ` +
+    'Please check your .env.local file and ensure these variables are set.'
+  )
+}
+
 export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId,
+  dataset,
   useCdn: true,
   apiVersion: '2023-05-03',
 })
