@@ -1,38 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { urlFor, BlogPost, TekAndTip } from '@/lib/sanity'
-
-// Helper function to get difficulty color for tek badges
-function getDifficultyColor(difficulty: string) {
-  switch (difficulty) {
-    case 'beginner':
-      return 'bg-mfg-teal text-mfg-light'
-    case 'intermediate':
-      return 'bg-mfg-gold text-mfg-dark'
-    case 'advanced':
-      return 'bg-mfg-purple text-mfg-light'
-    default:
-      return 'bg-gray-500 text-white'
-  }
-}
-
-// Helper function to get category color for tek badges
-function getCategoryColor(category: string) {
-  switch (category) {
-    case 'growing':
-      return 'border-blue-400 text-blue-300'
-    case 'sterilization':
-      return 'border-purple-400 text-purple-300'
-    case 'substrate':
-      return 'border-orange-400 text-orange-300'
-    case 'harvesting':
-      return 'border-pink-400 text-pink-300'
-    case 'general':
-      return 'border-gray-400 text-gray-300'
-    default:
-      return 'border-gray-500 text-gray-400'
-  }
-}
+import { getDifficultyColor, getCategoryColor } from '@/lib/utils'
 
 interface PostCardProps {
   post: BlogPost | TekAndTip

@@ -1,6 +1,5 @@
-import Link from 'next/link'
-import Image from 'next/image'
-import { client, urlFor, BlogPost } from '@/lib/sanity'
+import { client, BlogPost } from '@/lib/sanity'
+import PostCard from '@/components/PostCard'
 
 // Function to fetch blog posts from Sanity
 async function getBlogPosts(): Promise<BlogPost[]> {
@@ -43,43 +42,7 @@ export default async function BlogPage() {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
-              <Link 
-                key={post._id} 
-                href={`/blog/${post.slug.current}`}
-                className="group block"
-              >
-                <article className="bg-mfg-dark/50 backdrop-blur-md rounded-xl shadow-lg border border-mfg-purple/30 overflow-hidden h-full transform hover:-translate-y-2 transition-transform duration-300">
-                  {post.image ? (
-                    <div className="aspect-video relative overflow-hidden">
-                      <Image
-                        src={urlFor(post.image).width(400).height(225).url()}
-                        alt={post.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  ) : (
-                    <div className="aspect-video bg-gradient-to-br from-mfg-purple/20 to-mfg-teal/20 flex items-center justify-center">
-                      <span className="text-5xl opacity-50">🍄</span>
-                    </div>
-                  )}
-                  <div className="p-6 flex flex-col">
-                    <h2 className="text-2xl font-display font-bold text-mfg-light mb-2 group-hover:text-mfg-purple transition-colors">
-                      {post.title}
-                    </h2>
-                    <p className="text-mfg-light/60 text-sm mb-4">
-                      {new Date(post.published_at).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
-                    </p>
-                    <p className="text-mfg-light/80 line-clamp-3 flex-grow">
-                      {post.brief_description}
-                    </p>
-                  </div>
-                </article>
-              </Link>
+              <PostCard key={post._id} post={post} basePath="blog" />
             ))}
           </div>
         )}

@@ -1,6 +1,5 @@
-import Link from 'next/link'
-import Image from 'next/image'
-import { client, urlFor, TekAndTip } from '@/lib/sanity'
+import { client, TekAndTip } from '@/lib/sanity'
+import PostCard from '@/components/PostCard'
 
 // Function to fetch teks and tips from Sanity
 async function getTeksAndTips(): Promise<TekAndTip[]> {
@@ -17,38 +16,6 @@ async function getTeksAndTips(): Promise<TekAndTip[]> {
     }`
   )
   return teks
-}
-
-// Helper function to get difficulty color
-function getDifficultyColor(difficulty: string) {
-  switch (difficulty) {
-    case 'beginner':
-      return 'bg-mfg-teal text-mfg-light'
-    case 'intermediate':
-      return 'bg-mfg-gold text-mfg-dark'
-    case 'advanced':
-      return 'bg-mfg-purple text-mfg-light'
-    default:
-      return 'bg-gray-500 text-white'
-  }
-}
-
-// Helper function to get category color
-function getCategoryColor(category: string) {
-  switch (category) {
-    case 'growing':
-      return 'border-blue-400 text-blue-300'
-    case 'sterilization':
-      return 'border-purple-400 text-purple-300'
-    case 'substrate':
-      return 'border-orange-400 text-orange-300'
-    case 'harvesting':
-      return 'border-pink-400 text-pink-300'
-    case 'general':
-      return 'border-gray-400 text-gray-300'
-    default:
-      return 'border-gray-500 text-gray-400'
-  }
 }
 
 export default async function TeksPage() {
@@ -77,55 +44,7 @@ export default async function TeksPage() {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teks.map((tek) => (
-              <Link 
-                key={tek._id} 
-                href={`/teks/${tek.slug.current}`}
-                className="group block"
-              >
-                <article className="bg-mfg-dark/50 backdrop-blur-md rounded-xl shadow-lg border border-mfg-purple/30 overflow-hidden h-full transform hover:-translate-y-2 transition-transform duration-300">
-                  {tek.image ? (
-                    <div className="aspect-video relative overflow-hidden">
-                      <Image
-                        src={urlFor(tek.image).width(400).height(225).url()}
-                        alt={tek.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  ) : (
-                    <div className="aspect-video bg-gradient-to-br from-mfg-purple/20 to-mfg-teal/20 flex items-center justify-center">
-                      <span className="text-5xl opacity-50">🔬</span>
-                    </div>
-                  )}
-                  <div className="p-6 flex flex-col">
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {tek.category && (
-                        <span className={`px-3 py-1 text-xs font-bold rounded-full border ${getCategoryColor(tek.category)}`}>
-                          {tek.category.charAt(0).toUpperCase() + tek.category.slice(1)}
-                        </span>
-                      )}
-                      {tek.difficulty_level && (
-                        <span className={`px-3 py-1 text-xs font-bold rounded-full ${getDifficultyColor(tek.difficulty_level)}`}>
-                          {tek.difficulty_level.charAt(0).toUpperCase() + tek.difficulty_level.slice(1)}
-                        </span>
-                      )}
-                    </div>
-                    <h2 className="text-2xl font-display font-bold text-mfg-light mb-2 group-hover:text-mfg-purple transition-colors">
-                      {tek.title}
-                    </h2>
-                    <p className="text-mfg-light/60 text-sm mb-4">
-                      {new Date(tek.published_at).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
-                    </p>
-                    <p className="text-mfg-light/80 line-clamp-3 flex-grow">
-                      {tek.brief_description}
-                    </p>
-                  </div>
-                </article>
-              </Link>
+              <PostCard key={tek._id} post={tek} basePath="teks" />
             ))}
           </div>
         )}
