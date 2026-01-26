@@ -8,6 +8,7 @@ const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Blog', href: '/blog' },
   { name: 'Teks & Tips', href: '/teks' },
+  { name: 'Partners', href: '/partners' },
   { name: 'Calculators', href: '/calculators' },
 ];
 

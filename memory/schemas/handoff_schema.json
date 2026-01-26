@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["source_workflow", "target_workflow", "feature", "timestamp", "status", "decisions", "open_questions", "files_created", "next_action"],
+  "properties": {
+    "source_workflow": { "type": "string" },
+    "target_workflow": { "type": "string" },
+    "feature": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["SUCCESS", "PARTIAL", "FAILED", "BLOCKED"] },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["decision", "rationale", "confidence"],
+        "properties": {
+          "decision": { "type": "string" },
+          "rationale": { "type": "string" },
+          "confidence": { "type": "integer", "minimum": 0, "maximum": 100 }
+        }
+      }
+    },
+    "open_questions": { "type": "array", "items": { "type": "string" } },
+    "files_created": { "type": "array", "items": { "type": "string" } },
+    "next_action": { "type": "string", "minLength": 10 },
+    "warnings": { "type": "array", "items": { "type": "string" } }
+  }
+}

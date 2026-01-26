@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "name": "North Spore",
+    "url": "https://northspore.com",
+    "description": "Premium mushroom spawn, substrates, and cultivation equipment. A trusted source for all your mycology needs.",
+    "category": "vendor",
+    "verified": true,
+    "image": null
+  },
+  {
+    "id": "2",
+    "name": "Shroomery",
+    "url": "https://www.shroomery.org",
+    "description": "The internet's oldest and largest community of mushroom enthusiasts. A vast repository of knowledge.",
+    "category": "knowledge",
+    "verified": false,
+    "image": null
+  },
+  {
+    "id": "3",
+    "name": "Mycelial FunGuy Instagram",
+    "url": "https://instagram.com",
+    "description": "Follow us for daily updates, grow tips, and community showcases.",
+    "category": "social",
+    "verified": true,
+    "image": null
+  },
+  {
+    "id": "4",
+    "name": "Midwest Grow Kits",
+    "url": "https://www.midwestgrowkits.com",
+    "description": "Complete mushroom growing kits and supplies for beginners and advanced growers.",
+    "category": "vendor",
+    "verified": false,
+    "image": null
+  }
+]
