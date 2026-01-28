@@ -1,0 +1,1 @@
+- Deployment 2026-01-26: Solicitation successful. Learned that validating the tech stack (Sanity vs JSON) actively during the Red Team phase prevents over-engineering. User preferred JSON for simple lists.
